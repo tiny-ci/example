@@ -1,0 +1,34 @@
+jobs:
+  - name: unit test
+    image: alpine
+    steps:
+      - echo hello
+      - echo world
+
+  - name: regression test
+    image: fedora
+    steps:
+      - |
+        echo multiline
+        echo steps
+      - echo single step
+    when:
+      branch: feat-*
+
+  - name: integration test
+    image: ubuntu
+    steps:
+      - echo lorem
+      - echo ipsum
+    when:
+      branch:
+        - master
+        - dev
+
+  - name: deploy
+    image: alpine
+    steps: |
+      echo hey
+      echo there
+    when:
+      tag: v*
