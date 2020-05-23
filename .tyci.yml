@@ -1,22 +1,25 @@
 jobs:
   - name: unit test
-    image: alpine
+    engine:
+      docker: alpine
     steps:
       - echo hello
       - echo world
 
   - name: regression test
-    image: fedora
+    engine:
+      docker: fedora
     steps:
       - |
         echo multiline
         echo steps
       - echo single step
     when:
-      branch: feat-*
+      branch: \startsWith feat-
 
   - name: integration test
-    image: ubuntu
+    engine:
+      vm: ubuntu
     steps:
       - echo lorem
       - echo ipsum
@@ -26,9 +29,10 @@ jobs:
         - dev
 
   - name: deploy
-    image: alpine
+    engine:
+      vm: ubuntu
     steps: |
       echo hey
       echo there
     when:
-      tag: v*
+      tag: \semver
